@@ -78,6 +78,19 @@ U0 init() {
   game_end=FALSE;
 }
 
+Move* inv_move(Move* m) {
+  switch (m) {
+    case &mv_left:
+      return &mv_right;
+    case &mv_right:
+      return &mv_left;
+    case &mv_up:
+      return &mv_down;
+    case &mv_down:
+      return &mv_up;
+  }
+}
+
 U0 plot_snake() {
   // Move tail.
   I64 px = tail_x[0],
@@ -170,7 +183,7 @@ U0 animate() {
 }
 
 U0 move(Move *d) {
-  if (d==dir)
+  if (d == inv_move(dir))
     return;
 
   dir=d;
@@ -225,4 +238,3 @@ U0 game() {
 
 init;
 game;
-
